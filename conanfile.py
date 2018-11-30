@@ -37,6 +37,7 @@ class LibuvConan(ConanFile):
                                   '''project(libuv C)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
 conan_basic_setup()''')
+            tools.replace_in_file("CMakeLists.txt", "if(UNIX)", "if(FALSE)")
 
     def build(self):
         with tools.chdir(self.zip_folder_name):
