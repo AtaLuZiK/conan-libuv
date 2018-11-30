@@ -1,0 +1,20 @@
+find_path(LIBUV_INCLUDE_DIR NAMES uv.h PATHS ${CONAN_INCLUDE_DIRS_LIBUV})
+find_library(LIBUV_LIBRARY NAMES uv PATHS ${CONAN_LIB_DIRS_LIBUV})
+
+if(NOT LIBUV_LIBRARY)
+  message(FATAL_ERROR "libuv library not found in path ${CONAN_LIB_DIRS_LIBUV}")
+endif(NOT LIBUV_LIBRARY)
+
+add_library(libuv INTERFACE IMPORTED)
+set_target_properties(libuv PROPERTIES
+  INTERFACE_INCLUDE_DIRECTORIES ${LIBUV_INCLUDE_DIR}
+  INTERFACE_LINK_LIBRARIES ${LIBUV_LIBRARY}
+  INTERFACE_COMPILE_DEFINITIONS ${CONAN_COMPILE_DEFINITIONS_LIBUV}
+)
+
+mark_as_advanced(LIBUV_INCLUDE_DIR LIBUV_LIBRARY)
+set(LIBUV_FOUND TRUE)
+
+message("** libuv found by Conan!")
+message("   - includes: ${LIBUV_INCLUDE_DIR}")
+message("   - libraries ${LIBUV_LIBRARY}")
